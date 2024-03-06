@@ -8,17 +8,19 @@ namespace Lab2.Models
 {
     internal abstract class Car
     {
-        protected double weight { init; get; }
-        protected double enginePower { init; get; }
-        protected string name { init; get; }
-
         public static int numberOfCars;
+        public double weight { init; get; }
+        public double enginePower { init; get; }
+        public string name { init; get; }
+        public int cost { init; get; }
+        
 
-        public Car(string name, double weight, double enginePower)
+        public Car(string name, double weight, double enginePower, int cost)
         {
             this.name = name;
             this.weight = weight;
             this.enginePower = enginePower;
+            this.cost = cost;
             numberOfCars++;
         }
 
