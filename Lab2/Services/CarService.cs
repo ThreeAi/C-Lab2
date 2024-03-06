@@ -1,18 +1,37 @@
 ﻿using Lab2.Models;
 using Lab2.Repositories;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Lab2.Services
 {
-    internal class CarService : ManipulationRepository<Car>
+    internal class CarService : ManipulationRepository<Car>, DataManipulation<CarService>
     {
         private List<Car> cars = new List<Car>();
-        
-        public void add(Car entity)
+        public Car this[int index]
+        {
+            get
+            {
+                if (index >= 0 && index < cars.Count)
+                {
+                    return cars[index];
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException("Index out of range");
+                }
+            }
+        }
+
+        public List<Car> GetAll() { return cars; }
+        public void Add(Car entity)
         {
             cars.Add(entity);
         }
@@ -27,31 +46,35 @@ namespace Lab2.Services
             return cars.Find(predicate);
         }
 
-        public void PrintStatistics()
+        public void Remove(int index)
         {
-            Console.WriteLine($"Количество имеющихся машин = {cars.Count}");
-            Console.WriteLine($"Количество созданых машин = {Car.numberOfCars}");
-            Console.WriteLine($"Средняя стоимость машины = {cars.Average(x => x.cost)}");
-            Console.WriteLine($"Средняя вес машины = {cars.Average(x => x.weight)}");
+            if (index >= 0 && index < cars.Count)
+            {
+                cars.RemoveAt(index);
+            }
+            else
+            {
+                Console.WriteLine("Index out of range");
+            }
         }
 
-        public void remove(int index)
+        public void Sort(Comparison<Car> comparison)
         {
-            cars.RemoveAt(index);
+            cars.Sort(comparison);
         }
 
-        public IEnumerable<Car> Sort(Comparison<Car> comparison)
+        public void Sort()
         {
-            List<Car> res = new List<Car>(cars);
-            res.Sort(comparison);
-            return res;
+            cars.Sort();
         }
 
-        public IEnumerable<Car> Sort()
+        public void Write(string path)
         {
-            List<Car> res = new List<Car>(cars);
-            res.Sort();
-            return res;
         }
+
+        public void Read(string path)
+        {     
+        }
+
     }
 }

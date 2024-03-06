@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab2.Models
 {
+    [Serializable]
     internal abstract class Car
     {
         public static int numberOfCars;

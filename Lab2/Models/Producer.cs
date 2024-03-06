@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab2.Models
 {
+    [Serializable]
     internal class Producer : IComparable<Producer>, IEquatable<Producer>
     {
         public string name { init; get; }

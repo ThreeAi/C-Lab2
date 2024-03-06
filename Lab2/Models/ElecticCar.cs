@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lab2.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Lab2.Models
 {
+    [Serializable]
     internal class ElecticCar : Car, IComparable<ElecticCar>, IEquatable<ElecticCar>
     {
         public double batteryCapacity { init; get; }
@@ -56,7 +58,7 @@ namespace Lab2.Models
 
         public override string ToString()
         {
-            return $"Producer: name={this.name}, weight={this.weight}, enginePower={this.enginePower}, cost={this.cost}, (Producer={this.producer})";
+            return $"ElectricCar: name={this.name}, weight={this.weight}, enginePower={this.enginePower}, cost={this.cost}, ({this.producer})";
         }
     }
 }

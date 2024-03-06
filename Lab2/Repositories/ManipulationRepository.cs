@@ -8,12 +8,11 @@ namespace Lab2.Repositories
 {
     internal interface ManipulationRepository<T> 
     {
-        public void add(T entity);
-        public void remove(int index);
-        public IEnumerable<T> Sort(Comparison<T> comparison);
-        public IEnumerable<T> Sort();
+        public void Add(T entity);
+        public void Remove(int index);
+        public void Sort(Comparison<T> comparison);
+        public void Sort();
         public T? Find(Predicate<T> predicate);
         public IEnumerable<T> Filter(Func<T, bool> predicate);
-        public void PrintStatistics();
     }
 }
