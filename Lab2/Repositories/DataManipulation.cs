@@ -8,7 +8,7 @@ namespace Lab2.Repositories
 {
     internal interface DataManipulation<T>
     {
-        public void Write(string path);
-        public void Read(string path);
+        public bool Write(string path);
+        public bool Read(string path);
     }
 }

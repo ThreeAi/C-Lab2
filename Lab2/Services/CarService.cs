@@ -1,14 +1,12 @@
 ﻿using Lab2.Models;
 using Lab2.Repositories;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Lab2.Services
 {
@@ -36,7 +34,7 @@ namespace Lab2.Services
             cars.Add(entity);
         }
 
-        public IEnumerable<Car> Filter(Func<Car, bool> predicate)
+        public List<Car> Filter(Func<Car, bool> predicate)
         {
             return cars.Where(predicate).ToList();
         }
@@ -54,7 +52,7 @@ namespace Lab2.Services
             }
             else
             {
-                Console.WriteLine("Index out of range");
+                throw new IndexOutOfRangeException("Index out of range");
             }
         }
 
@@ -68,13 +66,50 @@ namespace Lab2.Services
             cars.Sort();
         }
 
-        public void Write(string path)
+        public bool Write(string path)
         {
+            try
+            {
+                JsonSerializerSettings settings = new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.Auto
+                };
+                string json = JsonConvert.SerializeObject(cars, settings);
+                Console.WriteLine(json);
+                StreamWriter file = File.CreateText(path);
+                file.WriteLine(json);
+                file.Close();
+                return true;
+            } 
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+            
         }
 
-        public void Read(string path)
-        {     
+        public bool Read(string path)
+        {
+            if (File.Exists(path))
+            {
+                try
+                {
+                    JsonSerializerSettings settings = new JsonSerializerSettings
+                    {
+                        TypeNameHandling = TypeNameHandling.Auto
+                    };
+                    string data = File.ReadAllText(path);
+                    cars = JsonConvert.DeserializeObject<List<Car>>(data, settings);
+                    return true;
+                } 
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    return false;
+                }
+            }
+            return false;
         }
-
     }
 }

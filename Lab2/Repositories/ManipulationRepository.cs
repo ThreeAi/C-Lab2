@@ -13,6 +13,6 @@ namespace Lab2.Repositories
         public void Sort(Comparison<T> comparison);
         public void Sort();
         public T? Find(Predicate<T> predicate);
-        public IEnumerable<T> Filter(Func<T, bool> predicate);
+        public List<T> Filter(Func<T, bool> predicate);
     }
 }
